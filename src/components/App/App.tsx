@@ -40,7 +40,7 @@ export default function App() {
       <h1 className={css.description}>
         Please rate our service by selecting one of the options below.
       </h1>
-    </div>
+  
   );
       <VoteOptions
         onVote={handleVote}
