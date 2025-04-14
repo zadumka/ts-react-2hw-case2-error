@@ -36,7 +36,12 @@ export default function App() {
 
   return (
     <div className={css.app}>
-
+      <p className={css.title}>Sip Happens Café</p>
+      <h1 className={css.description}>
+        Please rate our service by selecting one of the options below.
+      </h1>
+    </div>
+  );
       <VoteOptions
         onVote={handleVote}
         onReset={resetVotes}
