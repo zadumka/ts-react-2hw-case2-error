@@ -1,12 +1,13 @@
-import { useState } from "react";
-import CafeInfo from "../CafeInfo/CafeInfo";
-import VoteOptions from "../VoteOptions/VoteOptions";
-import VoteStats from "../VoteStats/VoteStats";
-import Notification from "../Notification/Notification";
-import { Votes, VoteType } from "../../types/votes";
-import css from "./App.module.css";
+import { useState } from 'react';
+import css from './App.module.css';
+import Notification from '../Notification/Notification';
+import CafeInfo from '../CafeInfo/CafeInfo';
+import VoteOptions from '../VoteOptions/VoteOptions';
+import VoteStats from '../VoteStats/VoteStats';
 
-export default function App() {
+import type { Votes, VoteType } from '../../types/votes.ts';
+
+const App = () => {
   const [votes, setVotes] = useState<Votes>({
     good: 0,
     neutral: 0,
@@ -14,9 +15,9 @@ export default function App() {
   });
 
   const handleVote = (type: VoteType) => {
-    setVotes((prev) => ({
-      ...prev,
-      [type]: prev[type] + 1,
+    setVotes(prevVotes => ({
+      ...prevVotes,
+      [type]: prevVotes[type] + 1,
     }));
   };
 
@@ -29,33 +30,29 @@ export default function App() {
   };
 
   const totalVotes = votes.good + votes.neutral + votes.bad;
-
-  const positiveRate = totalVotes
-    ? Math.round((votes.good / totalVotes) * 100)
-    : 0;
-
+  const positiveRate = totalVotes ? Math.round((votes.good / totalVotes) * 100) : 0;
+    
   return (
     <div className={css.app}>
-      <p className={css.title}>Sip Happens Café</p>
-      <h1 className={css.description}>
-        Please rate our service by selecting one of the options below.
-      </h1>
-  
-  );
+      <CafeInfo />
+
       <VoteOptions
         onVote={handleVote}
         onReset={resetVotes}
         canReset={totalVotes > 0}
       />
-      {totalVotes > 0 ? (
+
+    {totalVotes > 0 ? (
         <VoteStats
           votes={votes}
           totalVotes={totalVotes}
           positiveRate={positiveRate}
         />
       ) : (
-
+        <Notification />
       )}
     </div>
   );
-}
+};
+
+export default App;
